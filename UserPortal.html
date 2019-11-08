@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>User Portal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="UserPortal.css">
+</head>
+<body>
+<header>
+  <p>Users Details</p>
+</header>
+
+<section class="content">
+
+  <section class="panel">
+    <section class="autocomplete">
+        <input id="searchStr" onfocus="this.value=''" type="text" name="searchStr" placeholder="Search User">
+        <input id ="crossBtn" type="image" src="cancel.png" class="clearInput">
+    </section>
+    <section class="resultHeader">
+        <h3>Search History</h3>
+        <!-- <a href="#" id="clear-all">Clear search history</a> -->
+    </section>
+    <section id="buttonPanel" hidden>
+        <button class="btn" id="clrAll">Clear All</button><button class="btn" id="clr">Clear</button><button class="btn" id="cancel">Cancel</button>
+    </section>
+    <section id="searchResult"></section>
+</section>
+
+  <aside>
+    <section id="profile" hidden >
+        <figure id="profileFig" hidden><img id="profileImage" alt="Profile Picture" style="width:100px;height:120px;"></figure>
+        <nav id="followersNav" hidden><p id="followersCount"></p><button>followers</button></nav>
+        <nav id="followingNav" hidden><p id="followingCount"></p><button>following</button></nav>
+    </section>
+    <section id="profileDetails" hidden>
+        <fieldset>
+            <legend>Personal Details:</legend>
+            <p id="profileName">
+            <p id="profileOrg">
+            <p id="profileType">
+            <p id="profileId">
+        </fieldset>
+    </section>
+  </aside>
+</section>
+
+<footer>
+  <a href="#">Contact Us</a>
+</footer>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script src="UserPortal.js"></script>
+</body>
+</html>
