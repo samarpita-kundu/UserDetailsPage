@@ -89,6 +89,20 @@ $( document ).ready(function() {
       fetch(url, {mode: 'cors'})
       .then((resp) => resp.json())  
       .then(function(data) {
+    console.log("page");
+        var login =`${data.login}`;
+        
+        if(login == "undefined" || login == null){
+            console.log(login);
+            document.getElementById("profile").setAttribute('hidden','true');
+            document.getElementById("profileDetails").setAttribute('hidden','true');
+            document.getElementById("profileFig").setAttribute('hidden','true');
+            document.getElementById("followersNav").removeAttribute('style');        
+            document.getElementById("followersNav").setAttribute('hidden','true');
+            document.getElementById("followingNav").setAttribute('hidden','true');
+            document.getElementById("NotFound").removeAttribute('hidden');
+            return false;
+        }
         var nav = createNode('nav'),  
         userName = createNode('button'),
         time = createNode('time'),
@@ -121,6 +135,7 @@ $( document ).ready(function() {
         fetch(org, {mode: 'cors'})
             .then((resp) => resp.json())  
             .then(function(orgData) {
+    console.log("osdf");
             document.getElementById("profileOrg").innerHTML= `Organisation : ${orgData[0].login}`;
         })
         .catch(function(error) {
@@ -133,6 +148,7 @@ $( document ).ready(function() {
         document.getElementById("followersNav").setAttribute('style','display: inline-block;');        
         document.getElementById("followingNav").removeAttribute('hidden'); 
         document.getElementById("profileDetails").removeAttribute('hidden');
+        document.getElementById("NotFound").setAttribute('hidden','true');
       })
       .catch(function(error) {
         console.log(error);
@@ -146,9 +162,8 @@ $( document ).ready(function() {
         .then((resp) => resp.json())  
         .then(function(data) {
             var img =`${data.avatar_url}`,
-            org = `${data.organizations_url}`,
-            followers = `${data.followers}`,
-            following = `${data.following}`;
+            org = `${data.organizations_url}`;
+            
             document.getElementById("profileImage").setAttribute('src',img); 
             document.getElementById("followersCount").innerHTML=  `${data.followers}`;
             document.getElementById("followingCount").innerHTML= `${data.following}`;
@@ -171,6 +186,8 @@ $( document ).ready(function() {
             document.getElementById("followersNav").setAttribute('style','display: inline-block;');        
             document.getElementById("followingNav").removeAttribute('hidden'); 
             document.getElementById("profileDetails").removeAttribute('hidden');
+            document.getElementById("NotFound").setAttribute('hidden','true');
+
         })
         .catch(function(error) {
         console.log(error);
@@ -258,19 +275,24 @@ $( document ).ready(function() {
     the text field from search-box and an array of possible autocompleted values*/
     function autocomplete(inputStr, arr) {
         var currentFocus;
+        console.log("entry");
 
         /*execute a function if text is written on search-box*/
         inputStr.addEventListener("input", function(e) {
             closeAllLists();
             var val =this.value;
             if (!val) { return false;}
+            
             currentFocus = -1;
             var a=document.createElement("article");
             a.setAttribute("id","autocomplete-list");
             a.setAttribute("class", "autocomplete-items");
             this.parentNode.appendChild(a);
+            console.log("input");
+            console.log(a);
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+    
+                if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
                 var b = document.createElement("article");
                 b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
                 b.innerHTML += arr[i].substr(val.length);
@@ -285,12 +307,20 @@ $( document ).ready(function() {
                 a.appendChild(b);
                 }
             }
+
+                
         });
 
         /*execute a function presses a key on the keyboard:*/
         inputStr.addEventListener("keydown", function(e) {
             var x = document.getElementById("autocomplete-list");
-            if (x) x = x.getElementsByTagName("article");
+  
+            if (x){
+                console.log("keydown");
+                x = x.getElementsByTagName("article"); 
+                console.log(x);
+            }
+            
             if (e.keyCode == 40) { //down
                 currentFocus++;
                 addActive(x);
@@ -299,9 +329,20 @@ $( document ).ready(function() {
                 addActive(x);
             } else if (e.keyCode == 13) { //enter
                 e.preventDefault();
+                console.log("enter");
+                console.log(currentFocus);
                 if (currentFocus > -1) {
-                if (x) x[currentFocus].click();
-                }
+                    console.log("A");
+                    if(x){
+                        console.log("B");
+                        x[currentFocus].click(); 
+                    } 
+                }else if(currentFocus==-1){
+                    console.log("C");
+                    console.log(inputStr.value);
+                    // alert("Invalid Login");
+                    search(inputStr.value);
+                }
             }
         });
         function addActive(x) {

@@ -150,7 +150,9 @@ section#searchResult {
   margin-right:auto;
   border-collapse: collapse;
   width: 100%;
-   vertical-align: middle;
+  vertical-align: middle;
+  overflow-y: auto;
+  height: 200px;
 }
 
 section#searchResult> nav{
@@ -263,4 +265,24 @@ section#searchResult>nav> input[type=image]{
   width:100px;
   /* height: 120px; */
   /* text-align: center; */
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
