@@ -81,6 +81,9 @@ $( document ).ready(function() {
 
     /*search functionality based on input text from search-box*/
     function search(selectedVal){
+        if(selectedVal === "undefined" || selectedVal === null || selectedVal==="") {
+            return false;
+        }
       var section = document.getElementById('searchResult'); 
      
       var url = 'https://api.github.com/users/'+selectedVal; 
@@ -89,10 +92,11 @@ $( document ).ready(function() {
       fetch(url, {mode: 'cors'})
       .then((resp) => resp.json())  
       .then(function(data) {
-    console.log("page");
+        console.log("page");
+        console.log(selectedVal);
         var login =`${data.login}`;
         
-        if(login == "undefined" || login == null){
+        if(login === "undefined" || login === null){
             console.log(login);
             document.getElementById("profile").setAttribute('hidden','true');
             document.getElementById("profileDetails").setAttribute('hidden','true');
@@ -117,14 +121,12 @@ $( document ).ready(function() {
         append(nav, inputCheck);
         append(nav, userName);
         append(nav, time)
-        append(nav, inputBtn);
+        append(nav, inputBtn); 
         append(section, nav);
 
         var img =`${data.avatar_url}`,
-        org = `${data.organizations_url}`,
-        followers = `${data.followers}`,
-        following = `${data.following}`;
-
+        org = `${data.organizations_url}`;
+        
         document.getElementById("profileImage").setAttribute('src',img); 
         document.getElementById("followersCount").innerHTML=  `${data.followers}`;
         document.getElementById("followingCount").innerHTML= `${data.following}`;
@@ -133,9 +135,8 @@ $( document ).ready(function() {
         document.getElementById("profileId").innerHTML= `Id : ${data.id}`;
 
         fetch(org, {mode: 'cors'})
-            .then((resp) => resp.json())  
-            .then(function(orgData) {
-    console.log("osdf");
+        .then((resp) => resp.json())  
+        .then(function(orgData) {
             document.getElementById("profileOrg").innerHTML= `Organisation : ${orgData[0].login}`;
         })
         .catch(function(error) {
@@ -172,8 +173,8 @@ $( document ).ready(function() {
             document.getElementById("profileId").innerHTML= `Id : ${data.id}`;
 
             fetch(org, {mode: 'cors'})
-                    .then((resp) => resp.json())  
-                    .then(function(orgData) {
+            .then((resp) => resp.json())  
+            .then(function(orgData) {
                 document.getElementById("profileOrg").innerHTML= `Organisation : ${orgData[0].login}`;
             })
             .catch(function(error) {
