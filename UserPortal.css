@@ -181,6 +181,10 @@ section#searchResult> nav > button{
   overflow:hidden;
   margin: 0px 2px;
   z-index: 1;
+  
+}
+
+button{
   border: none;
   background-color: inherit;
   /* padding: 14px 28px; */
@@ -249,22 +253,17 @@ section#searchResult>nav> input[type=image]{
 #profileFig {
   float:left;
   width:100px;
-  /* height: 120px; */
 }
 
 #followersNav {
   
   margin:0 auto;
   width:100px;
-  /* height: 120px; */
-  /* text-align: center; */
 }
 
 #followingNav {
   float:right;
   width:100px;
-  /* height: 120px; */
-  /* text-align: center; */
 }
 
 
@@ -272,17 +271,192 @@ section#searchResult>nav> input[type=image]{
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 300px;
+  left: 400px;
+  background-color: #fefefe;
+  border-radius: 10px;
+  width: 30%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color:white;
+  color: black;
+  border-radius: 10px;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.modal-body {
+  padding: 2px 16px;
+  border-radius: 10px;
+  overflow: auto;
+  height: 150Px;
+}
+
+.modal-footer {
+  border-radius: 10px;
+  padding: 2px 16px;
+  background-color: white;
+  color: black;
+  border-top: 1px solid #d4d4d4;
+}
+
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 300px; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 300px; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+.followers, .following {
+  display: flex;
+  flex-direction: row;
+}
+
+.followers:after, .following:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#figure{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+}
+
+#figure:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.login{
+  padding: 0px 16px 16px 16px;
+}
+
+#list{
+  display: table;
+  list-style: none;
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #d6d4d4;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #d6d4d4 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
 }

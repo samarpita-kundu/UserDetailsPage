@@ -1,6 +1,6 @@
 $( document ).ready(function() {
     console.log( "ready!" );
-    
+
     function createNode(element) {
       return document.createElement(element); // Create the type of element you pass in the parameters
     }
@@ -52,7 +52,6 @@ $( document ).ready(function() {
     $('#clr').on('click', function () {
         var checkboxes = new Array(); 
         checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-        console.log(checkboxes);
         if(checkboxes.length){
             for (var i=0; i<checkboxes.length; i++)  {
                 checkboxes[i].parentNode.remove();               
@@ -65,7 +64,6 @@ $( document ).ready(function() {
     $('#cancel').on('click', function () {
         var checkboxes = new Array(); 
         checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-        console.log(checkboxes);
         if(checkboxes.length){
             for (var i=0; i<checkboxes.length; i++)  {
                 checkboxes[i].checked = false;                   
@@ -92,18 +90,18 @@ $( document ).ready(function() {
       fetch(url, {mode: 'cors'})
       .then((resp) => resp.json())  
       .then(function(data) {
-        console.log("page");
-        console.log(selectedVal);
+       
         var login =`${data.login}`;
         
         if(login === "undefined" || login === null){
-            console.log(login);
             document.getElementById("profile").setAttribute('hidden','true');
             document.getElementById("profileDetails").setAttribute('hidden','true');
             document.getElementById("profileFig").setAttribute('hidden','true');
             document.getElementById("followersNav").removeAttribute('style');        
             document.getElementById("followersNav").setAttribute('hidden','true');
             document.getElementById("followingNav").setAttribute('hidden','true');
+            var userLogin = document.getElementById("userLogin");
+            userLogin.innerHTML=selectedVal;
             document.getElementById("NotFound").removeAttribute('hidden');
             return false;
         }
@@ -149,6 +147,8 @@ $( document ).ready(function() {
         document.getElementById("followersNav").setAttribute('style','display: inline-block;');        
         document.getElementById("followingNav").removeAttribute('hidden'); 
         document.getElementById("profileDetails").removeAttribute('hidden');
+        var userLogin = document.getElementById("userLogin");
+        userLogin.innerHTML=selectedVal;
         document.getElementById("NotFound").setAttribute('hidden','true');
       })
       .catch(function(error) {
@@ -187,6 +187,8 @@ $( document ).ready(function() {
             document.getElementById("followersNav").setAttribute('style','display: inline-block;');        
             document.getElementById("followingNav").removeAttribute('hidden'); 
             document.getElementById("profileDetails").removeAttribute('hidden');
+            var userLogin = document.getElementById("userLogin");
+            userLogin.innerHTML=selectedVal;
             document.getElementById("NotFound").setAttribute('hidden','true');
 
         })
@@ -196,56 +198,32 @@ $( document ).ready(function() {
     });
 
     $("#searchResult").on("change",'.checkBox', function() {
-        console.log("inside");
         
         var checkboxes = new Array(); 
         checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-        console.log(checkboxes);
         if(checkboxes.length){
-            console.log("all checked");
             checkAll(true);
             for (var i=0; i<checkboxes.length; i++)  {
-                console.log("all checked");
                 console.log(checkboxes[i].parentNode);
                 // checkboxes[i].parentNode.remove();
             }
         }else{
-            console.log("all unchecked");
             checkAll(false);
         }       
     });
 
     function checkAll(checktoggle){
         if(checktoggle){
-            console.log("remove hidden");
             document.getElementById("buttonPanel").removeAttribute('hidden'); 
         }else{
-            console.log("make it hidden again");
             document.getElementById("buttonPanel").setAttribute('hidden','true'); 
         }
-    }
-
-    document.getElementsByClassName("profileLink").onclick = function(){
-        console.log("adfadef");
-    };
-
-    $('.profileLink').on('click', function() {
-        openProfile();
-        
-        console.log($(this));
-    });
-
-    function openProfile() {
-
-        console.log("qweqwr");
-
     }
     
     /*get all users login*/
     function getLogin(){
       var arr = [];
       var url = 'https://api.github.com/users'; 
-      var match ="login";
       fetch(url, {mode: 'cors'})
         .then((resp) => resp.json())  
         .then(function(data) {
@@ -276,7 +254,6 @@ $( document ).ready(function() {
     the text field from search-box and an array of possible autocompleted values*/
     function autocomplete(inputStr, arr) {
         var currentFocus;
-        console.log("entry");
 
         /*execute a function if text is written on search-box*/
         inputStr.addEventListener("input", function(e) {
@@ -289,8 +266,6 @@ $( document ).ready(function() {
             a.setAttribute("id","autocomplete-list");
             a.setAttribute("class", "autocomplete-items");
             this.parentNode.appendChild(a);
-            console.log("input");
-            console.log(a);
             for (var i = 0; i < arr.length; i++) {
     
                 if (arr[i].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
@@ -300,7 +275,6 @@ $( document ).ready(function() {
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
                 b.addEventListener("click", function(e) {
                     inputStr.value = this.getElementsByTagName("input")[0].value;
-                    console.log(inputStr.value);
                     /*Search for selected value*/
                     search(inputStr.value);
                     closeAllLists();
@@ -317,9 +291,7 @@ $( document ).ready(function() {
             var x = document.getElementById("autocomplete-list");
   
             if (x){
-                console.log("keydown");
                 x = x.getElementsByTagName("article"); 
-                console.log(x);
             }
             
             if (e.keyCode == 40) { //down
@@ -330,17 +302,11 @@ $( document ).ready(function() {
                 addActive(x);
             } else if (e.keyCode == 13) { //enter
                 e.preventDefault();
-                console.log("enter");
-                console.log(currentFocus);
                 if (currentFocus > -1) {
-                    console.log("A");
                     if(x){
-                        console.log("B");
                         x[currentFocus].click(); 
                     } 
                 }else if(currentFocus==-1){
-                    console.log("C");
-                    console.log(inputStr.value);
                     // alert("Invalid Login");
                     search(inputStr.value);
                 }
@@ -374,4 +340,122 @@ $( document ).ready(function() {
         });
     }
 
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    // btn.onclick = function() {
+    $('.myBtn').on('click', function () {
+        var fired_button = $(this)[0].innerHTML;
+        var header = document.getElementsByClassName("modal-header")[0];
+        var headerText = header.querySelector ("h1");
+        headerText.innerHTML = fired_button;
+        var body = document.getElementsByClassName("modal-body")[0];
+        var bodyText = body.querySelector ("ul");
+        bodyText.innerHTML="";
+        var userLogin = document.getElementById("userLogin").innerHTML;
+        var url = 'https://api.github.com/users/'+userLogin+'/'+fired_button;
+       
+        fetch(url, {mode: 'cors'})
+        .then((resp) => resp.json())  
+        .then(function(data) {
+            Object.keys(data).forEach(function (item) {
+                var value=data[item];
+                var name = createNode('p');
+                nameURL = 'https://api.github.com/users/'+value.login;
+                fetch(nameURL, {mode: 'cors'})
+                    .then((resp) => resp.json())  
+                    .then(function(nameData) {
+                        name.innerHTML = (nameData.name!==null) ? nameData.name : "value not found";
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                var li = createNode('li'),
+                figure = createNode('img'),
+                div = createNode('div'),
+                
+                login = createNode('button');
+                login.innerHTML= (value.login!==null) ? value.login : "value not found";
+                
+                setAttributes(li, {"class" : fired_button});
+                setAttributes(div, {"class" : "login"});
+                setAttributes(login, {"class" : "userName", "id": login.innerHTML});
+                setAttributes(name, {"class" : "name"});
+                
+
+                setAttributes(figure, {"id" : "figure", "src" : value.avatar_url , "alt" : "figure"});
+                append(div,login);
+                append(div,name);
+                append(li,figure);
+                append(li,div);
+                append(bodyText,li);
+          });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        
+        modal.style.display = "block";
+    });
+
+
+    $("#list").on('click','.userName',function(event){ 
+        var selectedVal = event.target.id;
+        var url = 'https://api.github.com/users/'+selectedVal; 
+        fetch(url, {mode: 'cors'})
+        .then((resp) => resp.json())  
+        .then(function(data) {
+            var img =`${data.avatar_url}`,
+            org = `${data.organizations_url}`;
+            modal.style.display = "none";
+            document.getElementById("profileImage").setAttribute('src',img); 
+            document.getElementById("followersCount").innerHTML=  `${data.followers}`;
+            document.getElementById("followingCount").innerHTML= `${data.following}`;
+            document.getElementById("profileName").innerHTML= `Name : ${data.name}`;
+            document.getElementById("profileType").innerHTML= `Type : ${data.type}`;
+            document.getElementById("profileId").innerHTML= `Id : ${data.id}`;
+
+            fetch(org, {mode: 'cors'})
+            .then((resp) => resp.json())  
+            .then(function(orgData) {
+                document.getElementById("profileOrg").innerHTML= `Organisation : ${orgData[0].login}`;
+            })
+            .catch(function(error) {
+                    console.log(error);
+            });
+
+            document.getElementById("profile").removeAttribute('hidden');
+            document.getElementById("profileFig").removeAttribute('hidden');
+            document.getElementById("followersNav").removeAttribute('hidden');
+            document.getElementById("followersNav").setAttribute('style','display: inline-block;');        
+            document.getElementById("followingNav").removeAttribute('hidden'); 
+            document.getElementById("profileDetails").removeAttribute('hidden');
+            var userLogin = document.getElementById("userLogin");
+            userLogin.innerHTML=selectedVal;
+            document.getElementById("NotFound").setAttribute('hidden','true');
+
+        })
+        .catch(function(error) {
+        console.log(error);
+      });
+    });
+
+    $(".popup").on('click',function(){ 
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    });
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
 });
