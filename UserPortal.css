@@ -223,6 +223,11 @@ section#searchResult>nav> input[type=image]{
     /* float: right; */
 }
 
+.delBtn{
+  color: black;
+  cursor: pointer;
+}
+
 .panel{
     margin:auto;
     width:600px;
@@ -235,10 +240,10 @@ section#searchResult>nav> input[type=image]{
   color: white;
   padding: 5px 5px 5px 5px;
   text-align: center;
-  display: inline-block;
   margin: 4px 2px;
   cursor: pointer;
   font-size: 12px;
+  float: right;
 }
 
 #profile {

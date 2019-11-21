@@ -108,13 +108,14 @@ $( document ).ready(function() {
         var nav = createNode('nav'),  
         userName = createNode('button'),
         time = createNode('time'),
-        inputBtn = createNode('input'),
+        inputBtn = createNode('span'),
         inputCheck = createNode('input');
         time.innerHTML = `${dateTime}`;
+        inputBtn.innerHTML = `&times;`;
         userName.innerHTML=`${data.login}`;
         setAttributes(nav, {"id":selectedVal+dateTime});
         setAttributes(userName, {"id": selectedVal, "class":"userName"});
-        setAttributes(inputBtn, {"type": "image", "src": "cancel.png","class":"delBtn"});
+        setAttributes(inputBtn, {"class":"delBtn"});
         setAttributes(inputCheck, {"type": "checkbox", "class":"checkBox","name":selectedVal+dateTime});
         append(nav, inputCheck);
         append(nav, userName);
